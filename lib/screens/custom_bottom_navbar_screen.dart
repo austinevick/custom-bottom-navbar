@@ -1,7 +1,11 @@
-import 'package:custom_bottom_navbar/screens/add_bottom_sheet_widget.dart';
+import 'package:custom_bottom_navbar/screens/explore_screen.dart';
+import 'package:custom_bottom_navbar/screens/home_screen.dart';
+import 'package:custom_bottom_navbar/screens/library_screen.dart';
+import 'package:custom_bottom_navbar/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'change_view_bottom_sheet.dart';
+import '../widget/add_bottom_sheet_widget.dart';
+import '../widget/change_view_bottom_sheet.dart';
 
 class CustomBottomNavbarScreen extends StatefulWidget {
   const CustomBottomNavbarScreen({super.key});
@@ -13,13 +17,19 @@ class CustomBottomNavbarScreen extends StatefulWidget {
 
 class _CustomBottomNavbarScreenState extends State<CustomBottomNavbarScreen> {
   int selectedIndex = 0;
-  int b = 0;
-  int selectedTile = 0;
+  int libraryIndex = 0;
+  int libraryCurrentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: buildBody(),
+      body: [
+        const HomeScreen(),
+        const ExploreScreen(),
+        Container(), //Just here as a placeholder
+        LibraryScreen(index: libraryCurrentIndex),
+        const SettingsScreen()
+      ][selectedIndex],
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SizedBox(
@@ -54,44 +64,6 @@ class _CustomBottomNavbarScreenState extends State<CustomBottomNavbarScreen> {
     );
   }
 
-  Widget buildBody() {
-    return [
-      Container(
-        color: Colors.purple,
-        child: const Center(child: Text('HOME')),
-      ),
-      Container(
-        color: Colors.green,
-        child: const Center(child: Text('EXPLORE')),
-      ),
-      Container(
-        color: Colors.amber,
-        child: const Center(child: Text('')),
-      ),
-      buildSubscribe(),
-      Container(
-        color: Colors.black,
-        child: const Center(child: Text('SETTINGS')),
-      ),
-    ][selectedIndex];
-  }
-
-  Widget buildSubscribe() {
-    switch (selectedTile) {
-      case 0:
-        return Container(
-          color: Colors.brown,
-          child: const Center(child: Text('SUBSCRIBE')),
-        );
-      case 1:
-        return Container(
-          color: Colors.brown,
-          child: const Center(child: Text('Libray')),
-        );
-    }
-    return Container();
-  }
-
   String label(int i) {
     switch (i) {
       case 0:
@@ -99,7 +71,7 @@ class _CustomBottomNavbarScreenState extends State<CustomBottomNavbarScreen> {
       case 1:
         return 'Explore';
       case 3:
-        return 'Subscribe';
+        return 'Library';
       case 4:
         return 'Settings';
     }
@@ -113,7 +85,7 @@ class _CustomBottomNavbarScreenState extends State<CustomBottomNavbarScreen> {
       case 1:
         return Icons.explore;
       case 3:
-        return Icons.subscriptions;
+        return Icons.library_music;
       case 4:
         return Icons.settings;
     }
@@ -125,19 +97,25 @@ class _CustomBottomNavbarScreenState extends State<CustomBottomNavbarScreen> {
       onPressed: () => setState(() {
             selectedIndex = i;
             if (i == 3) {
-              if (b == 0) {
-                b++;
-              } else if (b == 1) {
+              if (libraryIndex == 0) {
+                libraryIndex++;
+              } else if (libraryIndex == 1) {
                 showModalBottomSheet(
                     context: context,
                     builder: (ctx) => ChangeViewBottomSheet(
-                          selectedTile: selectedTile,
-                          onItemOneTap: () => setState(() => selectedTile = 0),
-                          onItemTwoTap: () => setState(() => selectedTile = 1),
+                          selectedTile: libraryCurrentIndex,
+                          onItemOneTap: () {
+                            Navigator.of(context).pop();
+                            setState(() => libraryCurrentIndex = 0);
+                          },
+                          onItemTwoTap: () {
+                            Navigator.of(context).pop();
+                            setState(() => libraryCurrentIndex = 1);
+                          },
                         ));
               }
             } else if (i != 3) {
-              b = 0;
+              libraryIndex = 0;
             }
           }),
       icon: Column(

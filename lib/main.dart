@@ -1,7 +1,7 @@
 import 'package:custom_bottom_navbar/screens/custom_bottom_navbar_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/add_bottom_sheet_widget.dart';
+import 'widget/add_bottom_sheet_widget.dart';
 
 void main() {
   runApp(const MyApp());
