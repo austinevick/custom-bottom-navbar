@@ -1,5 +1,7 @@
-import 'package:custom_bottom_navbar/screens/bottom_sheet_widget.dart';
+import 'package:custom_bottom_navbar/screens/add_bottom_sheet_widget.dart';
 import 'package:flutter/material.dart';
+
+import 'change_view_bottom_sheet.dart';
 
 class CustomBottomNavbarScreen extends StatefulWidget {
   const CustomBottomNavbarScreen({super.key});
@@ -11,7 +13,8 @@ class CustomBottomNavbarScreen extends StatefulWidget {
 
 class _CustomBottomNavbarScreenState extends State<CustomBottomNavbarScreen> {
   int selectedIndex = 0;
-  bool isSelected = false;
+  int b = 0;
+  int selectedTile = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +40,13 @@ class _CustomBottomNavbarScreenState extends State<CustomBottomNavbarScreen> {
                                       topLeft: Radius.circular(20),
                                       topRight: Radius.circular(20))),
                               context: context,
-                              builder: (ctx) => const BottomSheetWidget()),
+                              builder: (ctx) => const AddBottomSheetWidget()),
                           icon: const Icon(
                             Icons.add_circle_outline,
                             color: Colors.white,
                           )));
                 }
+
                 return bottomNavIcon(i);
               })),
         ),
@@ -64,15 +68,28 @@ class _CustomBottomNavbarScreenState extends State<CustomBottomNavbarScreen> {
         color: Colors.amber,
         child: const Center(child: Text('')),
       ),
+      buildSubscribe(),
       Container(
-        color: Colors.brown,
-        child: const Center(child: Text('SUBSCRIBE')),
-      ),
-      Container(
-        color: Colors.brown,
+        color: Colors.black,
         child: const Center(child: Text('SETTINGS')),
       ),
     ][selectedIndex];
+  }
+
+  Widget buildSubscribe() {
+    switch (selectedTile) {
+      case 0:
+        return Container(
+          color: Colors.brown,
+          child: const Center(child: Text('SUBSCRIBE')),
+        );
+      case 1:
+        return Container(
+          color: Colors.brown,
+          child: const Center(child: Text('Libray')),
+        );
+    }
+    return Container();
   }
 
   String label(int i) {
@@ -105,15 +122,31 @@ class _CustomBottomNavbarScreenState extends State<CustomBottomNavbarScreen> {
 
   Widget bottomNavIcon(int i) => IconButton(
       padding: EdgeInsets.zero,
-      onPressed: () => setState(() => selectedIndex = i),
+      onPressed: () => setState(() {
+            selectedIndex = i;
+            if (i == 3) {
+              if (b == 0) {
+                b++;
+              } else if (b == 1) {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (ctx) => ChangeViewBottomSheet(
+                          selectedTile: selectedTile,
+                          onItemOneTap: () => setState(() => selectedTile = 0),
+                          onItemTwoTap: () => setState(() => selectedTile = 1),
+                        ));
+              }
+            } else if (i != 3) {
+              b = 0;
+            }
+          }),
       icon: Column(
         children: [
           Expanded(
-            child: Icon(
-              icon(i),
-              color: selectedIndex == i ? Colors.red : Colors.grey,
-            ),
-          ),
+              child: Icon(
+            icon(i),
+            color: selectedIndex == i ? Colors.red : Colors.grey,
+          )),
           Text(
             label(i),
             style: TextStyle(

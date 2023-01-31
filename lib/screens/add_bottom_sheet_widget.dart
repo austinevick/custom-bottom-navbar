@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BottomSheetWidget extends StatelessWidget {
-  const BottomSheetWidget({super.key});
+class AddBottomSheetWidget extends StatelessWidget {
+  const AddBottomSheetWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
