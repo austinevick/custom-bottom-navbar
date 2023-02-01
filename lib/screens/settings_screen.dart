@@ -6,6 +6,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Settings'), centerTitle: true),
       body: ListView.builder(
           itemCount: 10,
           itemBuilder: (ctx, i) => const Padding(
@@ -13,7 +14,7 @@ class SettingsScreen extends StatelessWidget {
                 child: SizedBox(
                   height: 75,
                   child: Card(
-                    color: Colors.yellowAccent,
+                    color: Colors.indigo,
                   ),
                 ),
               )),

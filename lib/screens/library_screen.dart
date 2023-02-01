@@ -8,6 +8,7 @@ class LibraryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     if (index == 0) {
       return Scaffold(
+        appBar: AppBar(title: const Text('Library'), centerTitle: true),
         body: ListView.builder(
             itemCount: 10,
             itemBuilder: (ctx, i) => const Padding(
@@ -22,6 +23,7 @@ class LibraryScreen extends StatelessWidget {
       );
     } else {
       return Scaffold(
+        appBar: AppBar(title: const Text('Device'), centerTitle: true),
         body: ListView.builder(
             itemCount: 10,
             itemBuilder: (ctx, i) => const Padding(

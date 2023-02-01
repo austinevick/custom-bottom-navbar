@@ -6,6 +6,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Home'), centerTitle: true),
       body: ListView.builder(
           itemCount: 10,
           itemBuilder: (ctx, i) => const Padding(

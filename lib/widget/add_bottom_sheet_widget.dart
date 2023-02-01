@@ -8,7 +8,7 @@ class AddBottomSheetWidget extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
+          padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -23,6 +23,7 @@ class AddBottomSheetWidget extends StatelessWidget {
             ],
           ),
         ),
+        const Divider(),
         buildIcons('Watch Now', Icons.watch_later_outlined),
         const SizedBox(height: 10),
         buildIcons('Go Live', Icons.live_tv),
